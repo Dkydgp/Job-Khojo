@@ -67,7 +67,7 @@
       </div>
 
       <!-- STEP 1 -->
-      <form id="step1" class="space-y-4" onsubmit="nextStep(event, 1)">
+      <form id="step1" class="space-y-4" onsubmit="saveStep1(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 1 of 3 – Personal Information
         </h2>
@@ -77,35 +77,36 @@
         <input type="tel" id="phone" placeholder="Phone Number" required class="w-full p-3 rounded-md text-black" />
         <input type="text" id="city" placeholder="City" required class="w-full p-3 rounded-md text-black" />
 
+        <!-- ✅ All Indian States -->
         <select id="state" required class="w-full p-3 rounded-md text-black">
           <option value="">Select State</option>
-          <option>Bihar</option>
-          <option>Delhi (NCT)</option>
-          <option>Maharashtra</option>
-          <option>Tamil Nadu</option>
-          <option>West Bengal</option>
-          <option>Uttar Pradesh</option>
-          <option>Other</option>
+          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+          <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+          <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+          <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+          <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+          <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+          <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+          <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+          <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+          <option>West Bengal</option><option>Andaman and Nicobar Islands</option>
+          <option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option>
+          <option>Delhi (NCT)</option><option>Jammu and Kashmir</option><option>Ladakh</option>
+          <option>Lakshadweep</option><option>Puducherry</option>
         </select>
 
         <select id="country" required class="w-full p-3 rounded-md text-black">
           <option value="">Select Country</option>
-          <option>India</option>
-          <option>Nepal</option>
-          <option>Bangladesh</option>
-          <option>Other</option>
+          <option>India</option><option>Nepal</option><option>Bangladesh</option><option>Other</option>
         </select>
 
-        <button
-          type="submit"
-          class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300"
-        >
+        <button type="submit" class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300 transition">
           Next → Job Preferences
         </button>
       </form>
 
       <!-- STEP 2 -->
-      <form id="step2" class="space-y-4 hidden" onsubmit="nextStep(event, 2)">
+      <form id="step2" class="space-y-4 hidden" onsubmit="saveStep2(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 2 of 3 – Job Preferences
         </h2>
@@ -113,49 +114,28 @@
         <input type="text" id="jobTitle" placeholder="Desired Job Title / Role" required class="w-full p-3 rounded-md text-black" />
         <select id="jobType" required class="w-full p-3 rounded-md text-black">
           <option value="">Preferred Job Type</option>
-          <option>Full-time</option>
-          <option>Part-time</option>
-          <option>Remote</option>
-          <option>Hybrid</option>
-          <option>Internship</option>
+          <option>Full-time</option><option>Part-time</option><option>Remote</option>
+          <option>Hybrid</option><option>Internship</option>
         </select>
         <select id="experience" required class="w-full p-3 rounded-md text-black">
           <option value="">Experience Level</option>
-          <option>Fresher</option>
-          <option>1–3 Years</option>
-          <option>3–5 Years</option>
-          <option>5–8 Years</option>
-          <option>8+ Years</option>
+          <option>Fresher</option><option>1–3 Years</option><option>3–5 Years</option>
+          <option>5–8 Years</option><option>8+ Years</option>
         </select>
         <select id="salary" required class="w-full p-3 rounded-md text-black">
           <option value="">Expected Salary (Per Year)</option>
-          <option>Below ₹3 LPA</option>
-          <option>₹3–5 LPA</option>
-          <option>₹5–8 LPA</option>
-          <option>₹8–12 LPA</option>
-          <option>₹12–20 LPA</option>
-          <option>Above ₹20 LPA</option>
+          <option>Below ₹3 LPA</option><option>₹3–5 LPA</option><option>₹5–8 LPA</option>
+          <option>₹8–12 LPA</option><option>₹12–20 LPA</option><option>Above ₹20 LPA</option>
         </select>
         <select id="industry" required class="w-full p-3 rounded-md text-black" onchange="loadSkills()">
           <option value="">Preferred Industry</option>
-          <option>Information Technology</option>
-          <option>Finance</option>
-          <option>Healthcare</option>
-          <option>Marketing</option>
-          <option>Education</option>
-          <option>E-commerce</option>
+          <option>Information Technology</option><option>Finance</option><option>Healthcare</option>
+          <option>Marketing</option><option>Education</option><option>E-commerce</option>
         </select>
 
-        <!-- Willing to Relocate (optional) -->
-        <label class="block">
-          <input type="checkbox" id="relocate" class="mr-2" />
-          I am willing to relocate (optional)
-        </label>
+        <label class="block"><input type="checkbox" id="relocate" class="mr-2" />I am willing to relocate (optional)</label>
 
-        <button
-          type="submit"
-          class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300"
-        >
+        <button type="submit" class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300 transition">
           Next → Skills & Resume
         </button>
       </form>
@@ -169,54 +149,25 @@
         <label class="block mb-2 text-sm">Select Your Primary Skills</label>
         <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
 
-        <!-- Manual skill (optional now) -->
-        <input
-          type="text"
-          id="manualSkill"
-          placeholder="Add a skill and press Enter (optional)"
-          class="w-full p-3 rounded-md text-black"
-          onkeydown="addManualSkill(event)"
-        />
+        <input type="text" id="manualSkill" placeholder="Add a skill and press Enter (optional)" class="w-full p-3 rounded-md text-black" onkeydown="addManualSkill(event)" />
 
         <label class="block mt-4 mb-2 text-sm">Upload Your Resume</label>
-        <input
-          type="file"
-          id="resume"
-          accept=".pdf,.doc,.docx"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
+        <input type="file" id="resume" accept=".pdf,.doc,.docx" required class="w-full p-3 rounded-md text-black" />
 
-        <button
-          type="submit"
-          id="submitBtn"
-          class="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-400"
-        >
+        <button type="submit" id="submitBtn" class="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-400">
           Submit → Find Jobs
         </button>
-
         <p id="loadingMsg" class="hidden text-center text-yellow-300 mt-3">⏳ Submitting... please wait</p>
       </form>
 
-      <!-- ✅ SUCCESS SCREEN -->
       <div id="successScreen" class="hidden text-center space-y-6">
-        <h2 class="text-3xl font-bold text-green-400 animate-bounce">
-          🎉 Congratulations!
-        </h2>
+        <h2 class="text-3xl font-bold text-green-400 animate-bounce">🎉 Congratulations!</h2>
         <p class="text-lg text-gray-100">
-          Your details have been submitted successfully to
-          <span class="text-yellow-300 font-semibold">Job Khojo</span>.
+          Your details have been submitted successfully to <span class="text-yellow-300 font-semibold">Job Khojo</span>.
         </p>
         <p class="text-md text-gray-200">
           Kindly check your registered email for personalized job matches.
         </p>
-
-        <div class="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
-          <p class="italic text-lg text-gray-100">
-            “The future depends on what you do today.”
-          </p>
-          <p class="text-sm text-gray-300 mt-2">— Mahatma Gandhi</p>
-        </div>
       </div>
     </div>
 
@@ -230,88 +181,118 @@
         document.getElementById(`stepIndicator${step + 1}`).classList.add("active-step");
       }
 
-      // Load skills dynamically
-      const industrySkills = {
-        "Information Technology": ["Python", "React", "Node.js", "SQL", "AWS"],
-        Finance: ["Tally", "Excel", "Accounting", "Taxation"],
-        Healthcare: ["Clinical Data", "Patient Care", "Medical Coding"],
-        Marketing: ["SEO", "Social Media", "Content Writing"],
-        Education: ["Teaching", "Research", "Curriculum Design"],
-        "E-commerce": ["Inventory", "Product Listing", "SEO"],
-      };
-
-      function loadSkills() {
-        const industry = document.getElementById("industry").value;
-        const container = document.getElementById("skillsContainer");
-        container.innerHTML = "";
-        if (industrySkills[industry]) {
-          industrySkills[industry].forEach((skill) => {
-            const tag = document.createElement("span");
-            tag.textContent = skill;
-            tag.classList.add("tag");
-            tag.onclick = () => tag.classList.toggle("bg-gray-500");
-            container.appendChild(tag);
+      // Save data to backend (JSON)
+      async function saveToBackend(data, endpoint = "/api/jobform") {
+        try {
+          const res = await fetch(`https://job-search-engine-backend.onrender.com${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
           });
+          return await res.json();
+        } catch (err) {
+          console.error("Backend save failed", err);
+          return { status: "error" };
         }
       }
 
+      // Step 1 save
+      async function saveStep1(event) {
+        event.preventDefault();
+        const data = {
+          full_name: fullName.value, email: email.value, phone: phone.value,
+          city: city.value, state: state.value, country: country.value,
+        };
+        const result = await saveToBackend(data, "/api/save_personal");
+        if (result.status === "success") {
+          localStorage.setItem("user_id", result.user_id);
+          nextStep(event, 1);
+        } else alert("⚠️ Error saving Step 1 data");
+      }
+
+      // Step 2 save
+      async function saveStep2(event) {
+        event.preventDefault();
+        const user_id = localStorage.getItem("user_id");
+        const data = {
+          user_id,
+          job_title: jobTitle.value,
+          job_type: jobType.value,
+          experience: experience.value,
+          salary: salary.value,
+          industry: industry.value,
+          relocate: relocate.checked ? "Yes" : "No",
+        };
+        const result = await saveToBackend(data, "/api/save_preferences");
+        if (result.status === "success") nextStep(event, 2);
+        else alert("⚠️ Error saving Step 2 data");
+      }
+
+      // Skills logic
+      const industrySkills = {
+        "Information Technology": ["Python","React","Node.js","SQL","AWS"],
+        "Finance": ["Tally","Excel","Accounting","Taxation"],
+        "Healthcare": ["Clinical Data","Patient Care","Medical Coding"],
+        "Marketing": ["SEO","Social Media","Content Writing"],
+        "Education": ["Teaching","Research","Curriculum Design"],
+        "E-commerce": ["Inventory","Product Listing","SEO"],
+      };
+      function loadSkills() {
+        const ind = industry.value, c = skillsContainer;
+        c.innerHTML = "";
+        if (industrySkills[ind]) {
+          industrySkills[ind].forEach(s => {
+            const tag = document.createElement("span");
+            tag.textContent = s; tag.classList.add("tag");
+            tag.onclick = () => tag.classList.toggle("bg-gray-500");
+            c.appendChild(tag);
+          });
+        }
+      }
       function addManualSkill(e) {
         if (e.key === "Enter") {
           e.preventDefault();
-          const input = document.getElementById("manualSkill");
-          const skill = input.value.trim();
+          const skill = manualSkill.value.trim();
           if (skill) {
             const tag = document.createElement("span");
-            tag.textContent = skill;
-            tag.classList.add("tag");
-            document.getElementById("skillsContainer").appendChild(tag);
-            input.value = "";
+            tag.textContent = skill; tag.classList.add("tag");
+            tag.onclick = () => tag.classList.toggle("bg-gray-500");
+            skillsContainer.appendChild(tag);
+            manualSkill.value = "";
           }
         }
       }
 
-      // Submit to backend
+      // Step 3 submit
       async function submitToBackend(event) {
         event.preventDefault();
-        const btn = document.getElementById("submitBtn");
-        const loading = document.getElementById("loadingMsg");
-        btn.disabled = true;
-        loading.classList.remove("hidden");
+        const user_id = localStorage.getItem("user_id");
+        const btn = submitBtn; const loading = loadingMsg;
+        btn.disabled = true; loading.classList.remove("hidden");
 
+        const tags = Array.from(document.querySelectorAll("#skillsContainer .tag"))
+          .filter(t => !t.classList.contains("bg-gray-500"))
+          .map(t => t.textContent);
         const formData = new FormData();
-        [
-          "fullName","email","phone","city","state","country",
-          "jobTitle","jobType","experience","salary","industry","shift"
-        ].forEach(id => formData.append(id, document.getElementById(id).value));
-
-        const relocate = document.getElementById("relocate").checked ? "on" : "off";
-        formData.append("relocate", relocate);
-
-        const tags = Array.from(document.querySelectorAll("#skillsContainer .tag"));
-        const skills = tags.map(t => t.textContent).join(", ");
-        formData.append("skills", skills);
-
-        const resumeFile = document.getElementById("resume").files[0];
-        if (resumeFile) formData.append("resume", resumeFile);
+        formData.append("user_id", user_id);
+        formData.append("skills", tags.join(", "));
+        formData.append("resume", resume.files[0]);
 
         try {
-          const response = await fetch("https://job-search-engine-backend.onrender.com/api/jobform", {
-            method: "POST",
-            body: formData
+          const res = await fetch("https://job-search-engine-backend.onrender.com/api/finalize", {
+            method: "POST", body: formData
           });
-          const result = await response.json();
+          const result = await res.json();
           if (result.status === "success") {
-            document.getElementById("step3").classList.add("hidden");
-            document.getElementById("successScreen").classList.remove("hidden");
-          } else {
-            alert("⚠️ Backend error: " + (result.error || result.message));
-          }
-        } catch (error) {
-          console.error(error);
-          alert("⚠️ Could not reach backend.");
+            step3.classList.add("hidden");
+            successScreen.classList.remove("hidden");
+            localStorage.removeItem("user_id");
+          } else alert("⚠️ Error saving final data");
+        } catch (err) {
+          alert("⚠️ Could not reach backend");
+          console.error(err);
         } finally {
-          btn.disabled = false;
-          loading.classList.add("hidden");
+          btn.disabled = false; loading.classList.add("hidden");
         }
       }
     </script>
