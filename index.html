@@ -67,79 +67,25 @@
       </div>
 
       <!-- STEP 1 -->
-      <form id="step1" class="space-y-4" onsubmit="validateStep1(event)">
+      <form id="step1" class="space-y-4" onsubmit="nextStep(event, 1)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 1 of 3 – Personal Information
         </h2>
 
-        <input
-          type="text"
-          id="fullName"
-          placeholder="Full Name"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
-        <input
-          type="email"
-          id="email"
-          placeholder="Email Address"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
-        <input
-          type="tel"
-          id="phone"
-          placeholder="Phone Number"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
-        <input
-          type="text"
-          id="city"
-          placeholder="City"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
+        <input type="text" id="fullName" placeholder="Full Name" required class="w-full p-3 rounded-md text-black" />
+        <input type="email" id="email" placeholder="Email Address" required class="w-full p-3 rounded-md text-black" />
+        <input type="tel" id="phone" placeholder="Phone Number" required class="w-full p-3 rounded-md text-black" />
+        <input type="text" id="city" placeholder="City" required class="w-full p-3 rounded-md text-black" />
 
-        <!-- ✅ Full list of Indian States -->
         <select id="state" required class="w-full p-3 rounded-md text-black">
           <option value="">Select State</option>
-          <option>Andhra Pradesh</option>
-          <option>Arunachal Pradesh</option>
-          <option>Assam</option>
           <option>Bihar</option>
-          <option>Chhattisgarh</option>
-          <option>Goa</option>
-          <option>Gujarat</option>
-          <option>Haryana</option>
-          <option>Himachal Pradesh</option>
-          <option>Jharkhand</option>
-          <option>Karnataka</option>
-          <option>Kerala</option>
-          <option>Madhya Pradesh</option>
-          <option>Maharashtra</option>
-          <option>Manipur</option>
-          <option>Meghalaya</option>
-          <option>Mizoram</option>
-          <option>Nagaland</option>
-          <option>Odisha</option>
-          <option>Punjab</option>
-          <option>Rajasthan</option>
-          <option>Sikkim</option>
-          <option>Tamil Nadu</option>
-          <option>Telangana</option>
-          <option>Tripura</option>
-          <option>Uttar Pradesh</option>
-          <option>Uttarakhand</option>
-          <option>West Bengal</option>
-          <option>Andaman and Nicobar Islands</option>
-          <option>Chandigarh</option>
-          <option>Dadra and Nagar Haveli and Daman and Diu</option>
           <option>Delhi (NCT)</option>
-          <option>Jammu and Kashmir</option>
-          <option>Ladakh</option>
-          <option>Lakshadweep</option>
-          <option>Puducherry</option>
+          <option>Maharashtra</option>
+          <option>Tamil Nadu</option>
+          <option>West Bengal</option>
+          <option>Uttar Pradesh</option>
+          <option>Other</option>
         </select>
 
         <select id="country" required class="w-full p-3 rounded-md text-black">
@@ -147,9 +93,6 @@
           <option>India</option>
           <option>Nepal</option>
           <option>Bangladesh</option>
-          <option>Sri Lanka</option>
-          <option>Bhutan</option>
-          <option>Maldives</option>
           <option>Other</option>
         </select>
 
@@ -162,18 +105,12 @@
       </form>
 
       <!-- STEP 2 -->
-      <form id="step2" class="space-y-4 hidden" onsubmit="validateStep2(event)">
+      <form id="step2" class="space-y-4 hidden" onsubmit="nextStep(event, 2)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 2 of 3 – Job Preferences
         </h2>
 
-        <input
-          type="text"
-          id="jobTitle"
-          placeholder="Desired Job Title / Role"
-          required
-          class="w-full p-3 rounded-md text-black"
-        />
+        <input type="text" id="jobTitle" placeholder="Desired Job Title / Role" required class="w-full p-3 rounded-md text-black" />
         <select id="jobType" required class="w-full p-3 rounded-md text-black">
           <option value="">Preferred Job Type</option>
           <option>Full-time</option>
@@ -182,11 +119,7 @@
           <option>Hybrid</option>
           <option>Internship</option>
         </select>
-        <select
-          id="experience"
-          required
-          class="w-full p-3 rounded-md text-black"
-        >
+        <select id="experience" required class="w-full p-3 rounded-md text-black">
           <option value="">Experience Level</option>
           <option>Fresher</option>
           <option>1–3 Years</option>
@@ -196,19 +129,14 @@
         </select>
         <select id="salary" required class="w-full p-3 rounded-md text-black">
           <option value="">Expected Salary (Per Year)</option>
-          <option>Below ₹3 LPA per year</option>
-          <option>₹3–5 LPA per year</option>
-          <option>₹5–8 LPA per year</option>
-          <option>₹8–12 LPA per year</option>
-          <option>₹12–20 LPA per year</option>
-          <option>Above ₹20 LPA per year</option>
+          <option>Below ₹3 LPA</option>
+          <option>₹3–5 LPA</option>
+          <option>₹5–8 LPA</option>
+          <option>₹8–12 LPA</option>
+          <option>₹12–20 LPA</option>
+          <option>Above ₹20 LPA</option>
         </select>
-        <select
-          id="industry"
-          required
-          class="w-full p-3 rounded-md text-black"
-          onchange="loadSkills()"
-        >
+        <select id="industry" required class="w-full p-3 rounded-md text-black" onchange="loadSkills()">
           <option value="">Preferred Industry</option>
           <option>Information Technology</option>
           <option>Finance</option>
@@ -216,29 +144,24 @@
           <option>Marketing</option>
           <option>Education</option>
           <option>E-commerce</option>
-          <option>Manufacturing</option>
         </select>
-        <select id="shift" required class="w-full p-3 rounded-md text-black">
-          <option value="">Working Shift Preference</option>
-          <option>Day</option>
-          <option>Night</option>
-          <option>Flexible</option>
-        </select>
+
+        <!-- Willing to Relocate (optional) -->
         <label class="block">
-          <input type="checkbox" id="relocate" required class="mr-2" /> I am
-          willing to relocate
+          <input type="checkbox" id="relocate" class="mr-2" />
+          I am willing to relocate (optional)
         </label>
 
         <button
           type="submit"
           class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300"
         >
-          Next → Skills & Resume Upload
+          Next → Skills & Resume
         </button>
       </form>
 
       <!-- STEP 3 -->
-      <form id="step3" class="space-y-4 hidden" onsubmit="validateStep3(event)">
+      <form id="step3" class="space-y-4 hidden" onsubmit="submitToBackend(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 3 of 3 – Skills & Resume Upload
         </h2>
@@ -246,11 +169,11 @@
         <label class="block mb-2 text-sm">Select Your Primary Skills</label>
         <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
 
+        <!-- Manual skill (optional now) -->
         <input
           type="text"
           id="manualSkill"
-          placeholder="Add a skill and press Enter"
-          required
+          placeholder="Add a skill and press Enter (optional)"
           class="w-full p-3 rounded-md text-black"
           onkeydown="addManualSkill(event)"
         />
@@ -266,10 +189,13 @@
 
         <button
           type="submit"
+          id="submitBtn"
           class="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-400"
         >
           Submit → Find Jobs
         </button>
+
+        <p id="loadingMsg" class="hidden text-center text-yellow-300 mt-3">⏳ Submitting... please wait</p>
       </form>
 
       <!-- ✅ SUCCESS SCREEN -->
@@ -282,152 +208,36 @@
           <span class="text-yellow-300 font-semibold">Job Khojo</span>.
         </p>
         <p class="text-md text-gray-200">
-          Kindly check your registered email for your personalized job matches.
+          Kindly check your registered email for personalized job matches.
         </p>
 
-        <div
-          class="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg"
-        >
+        <div class="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
           <p class="italic text-lg text-gray-100">
             “The future depends on what you do today.”
           </p>
           <p class="text-sm text-gray-300 mt-2">— Mahatma Gandhi</p>
         </div>
-
-        <!-- 💌 Share Section -->
-        <div
-          class="mt-8 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg"
-        >
-          <h3 class="text-xl font-semibold text-yellow-300 mb-4">
-            💌 Share Job Khojo with your friends!
-          </h3>
-          <div class="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://wa.me/?text=🚀%20Check%20out%20Job%20Khojo!%20Find%20your%20dream%20job%20here:%20https://jobkhojo.com"
-              target="_blank"
-              class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
-              >WhatsApp</a
-            >
-            <a
-              href="mailto:?subject=Find%20your%20dream%20job%20on%20Job%20Khojo!&body=Hey!%20I%20just%20found%20a%20great%20job%20platform%20called%20Job%20Khojo.%20Check%20it%20out:%20https://jobkhojo.com"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-              >Email</a
-            >
-            <a
-              href="https://twitter.com/intent/tweet?text=🚀%20Check%20out%20Job%20Khojo!%20Find%20your%20dream%20job%20here:%20https://jobkhojo.com"
-              target="_blank"
-              class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-md"
-              >X / Twitter</a
-            >
-            <button
-              onclick="copyLink()"
-              class="bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-md font-semibold"
-            >
-              Copy Link
-            </button>
-          </div>
-          <p id="copyMsg" class="text-sm text-green-400 mt-3 hidden">
-            ✅ Link copied to clipboard!
-          </p>
-        </div>
-
-        <button
-          onclick="resetForm()"
-          class="mt-6 bg-yellow-400 text-black px-6 py-3 rounded-md font-semibold hover:bg-yellow-300 transition-all"
-        >
-          🔁 Submit Another Response
-        </button>
       </div>
     </div>
 
     <script>
-      function validateStep1(e) {
-        e.preventDefault();
-        if (e.target.checkValidity()) nextStep(1);
-      }
-      function validateStep2(e) {
-        e.preventDefault();
-        if (e.target.checkValidity()) nextStep(2);
-      }
-      function validateStep3(e) {
-        e.preventDefault();
-        if (e.target.checkValidity()) showSuccess();
+      // Navigation
+      function nextStep(event, step) {
+        event.preventDefault();
+        document.getElementById(`step${step}`).classList.add("hidden");
+        document.getElementById(`step${step + 1}`).classList.remove("hidden");
+        document.getElementById(`stepIndicator${step}`).classList.remove("active-step");
+        document.getElementById(`stepIndicator${step + 1}`).classList.add("active-step");
       }
 
-      function nextStep(n) {
-        document.getElementById(`step${n}`).classList.add("hidden");
-        document.getElementById(`step${n + 1}`).classList.remove("hidden");
-        document
-          .getElementById(`stepIndicator${n}`)
-          .classList.remove("active-step");
-        document
-          .getElementById(`stepIndicator${n + 1}`)
-          .classList.add("active-step");
-      }
-
-      function showSuccess() {
-        document.getElementById("step3").classList.add("hidden");
-        document.getElementById("successScreen").classList.remove("hidden");
-        document.getElementById("stepIndicator3").classList.add("active-step");
-      }
-
-      function resetForm() {
-        document.querySelectorAll("form").forEach((f) => f.reset());
-        document.getElementById("skillsContainer").innerHTML = "";
-        document.getElementById("successScreen").classList.add("hidden");
-        document.getElementById("step1").classList.remove("hidden");
-        for (let i = 1; i <= 3; i++)
-          document
-            .getElementById(`stepIndicator${i}`)
-            .classList.remove("active-step");
-        document.getElementById("stepIndicator1").classList.add("active-step");
-      }
-
-      function copyLink() {
-        navigator.clipboard.writeText("https://jobkhojo.com");
-        const msg = document.getElementById("copyMsg");
-        msg.classList.remove("hidden");
-        setTimeout(() => msg.classList.add("hidden"), 3000);
-      }
-
-      // Skill logic
+      // Load skills dynamically
       const industrySkills = {
-        "Information Technology": [
-          "Python",
-          "JavaScript",
-          "React",
-          "Node.js",
-          "SQL",
-          "AWS",
-          "Git",
-        ],
-        Finance: [
-          "Excel",
-          "Tally",
-          "Accounting",
-          "Financial Analysis",
-          "SAP",
-          "Taxation",
-        ],
-        Healthcare: [
-          "Medical Coding",
-          "Clinical Data",
-          "Patient Care",
-          "Pharmacology",
-        ],
-        Marketing: [
-          "SEO",
-          "Digital Marketing",
-          "Social Media",
-          "Content Creation",
-        ],
-        Education: ["Teaching", "Curriculum Design", "Research"],
-        "E-commerce": ["Product Listing", "SEO", "Inventory Management"],
-        Manufacturing: [
-          "AutoCAD",
-          "Quality Control",
-          "Production Planning",
-        ],
+        "Information Technology": ["Python", "React", "Node.js", "SQL", "AWS"],
+        Finance: ["Tally", "Excel", "Accounting", "Taxation"],
+        Healthcare: ["Clinical Data", "Patient Care", "Medical Coding"],
+        Marketing: ["SEO", "Social Media", "Content Writing"],
+        Education: ["Teaching", "Research", "Curriculum Design"],
+        "E-commerce": ["Inventory", "Product Listing", "SEO"],
       };
 
       function loadSkills() {
@@ -454,10 +264,54 @@
             const tag = document.createElement("span");
             tag.textContent = skill;
             tag.classList.add("tag");
-            tag.onclick = () => tag.classList.toggle("bg-gray-500");
             document.getElementById("skillsContainer").appendChild(tag);
             input.value = "";
           }
+        }
+      }
+
+      // Submit to backend
+      async function submitToBackend(event) {
+        event.preventDefault();
+        const btn = document.getElementById("submitBtn");
+        const loading = document.getElementById("loadingMsg");
+        btn.disabled = true;
+        loading.classList.remove("hidden");
+
+        const formData = new FormData();
+        [
+          "fullName","email","phone","city","state","country",
+          "jobTitle","jobType","experience","salary","industry","shift"
+        ].forEach(id => formData.append(id, document.getElementById(id).value));
+
+        const relocate = document.getElementById("relocate").checked ? "on" : "off";
+        formData.append("relocate", relocate);
+
+        const tags = Array.from(document.querySelectorAll("#skillsContainer .tag"));
+        const skills = tags.map(t => t.textContent).join(", ");
+        formData.append("skills", skills);
+
+        const resumeFile = document.getElementById("resume").files[0];
+        if (resumeFile) formData.append("resume", resumeFile);
+
+        try {
+          const response = await fetch("https://job-search-engine-backend.onrender.com/api/jobform", {
+            method: "POST",
+            body: formData
+          });
+          const result = await response.json();
+          if (result.status === "success") {
+            document.getElementById("step3").classList.add("hidden");
+            document.getElementById("successScreen").classList.remove("hidden");
+          } else {
+            alert("⚠️ Backend error: " + (result.error || result.message));
+          }
+        } catch (error) {
+          console.error(error);
+          alert("⚠️ Could not reach backend.");
+        } finally {
+          btn.disabled = false;
+          loading.classList.add("hidden");
         }
       }
     </script>
