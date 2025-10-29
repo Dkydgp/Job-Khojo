@@ -28,6 +28,7 @@
         border-radius: 9999px;
         margin: 5px;
         display: inline-block;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -47,7 +48,7 @@
       <div class="flex justify-between mb-8">
         <div
           id="stepIndicator1"
-          class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center"
+          class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center active-step"
         >
           1
         </div>
@@ -66,10 +67,11 @@
       </div>
 
       <!-- STEP 1 -->
-      <form id="step1" class="space-y-4">
+      <form id="step1" class="space-y-4" onsubmit="validateStep1(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 1 of 3 – Personal Information
         </h2>
+
         <input
           type="text"
           id="fullName"
@@ -98,24 +100,61 @@
           required
           class="w-full p-3 rounded-md text-black"
         />
+
+        <!-- ✅ Full list of Indian States -->
         <select id="state" required class="w-full p-3 rounded-md text-black">
           <option value="">Select State</option>
+          <option>Andhra Pradesh</option>
+          <option>Arunachal Pradesh</option>
+          <option>Assam</option>
           <option>Bihar</option>
-          <option>Delhi NCR</option>
+          <option>Chhattisgarh</option>
+          <option>Goa</option>
+          <option>Gujarat</option>
+          <option>Haryana</option>
+          <option>Himachal Pradesh</option>
+          <option>Jharkhand</option>
+          <option>Karnataka</option>
+          <option>Kerala</option>
+          <option>Madhya Pradesh</option>
           <option>Maharashtra</option>
+          <option>Manipur</option>
+          <option>Meghalaya</option>
+          <option>Mizoram</option>
+          <option>Nagaland</option>
+          <option>Odisha</option>
+          <option>Punjab</option>
+          <option>Rajasthan</option>
+          <option>Sikkim</option>
           <option>Tamil Nadu</option>
+          <option>Telangana</option>
+          <option>Tripura</option>
           <option>Uttar Pradesh</option>
+          <option>Uttarakhand</option>
+          <option>West Bengal</option>
+          <option>Andaman and Nicobar Islands</option>
+          <option>Chandigarh</option>
+          <option>Dadra and Nagar Haveli and Daman and Diu</option>
+          <option>Delhi (NCT)</option>
+          <option>Jammu and Kashmir</option>
+          <option>Ladakh</option>
+          <option>Lakshadweep</option>
+          <option>Puducherry</option>
         </select>
+
         <select id="country" required class="w-full p-3 rounded-md text-black">
+          <option value="">Select Country</option>
           <option>India</option>
           <option>Nepal</option>
           <option>Bangladesh</option>
           <option>Sri Lanka</option>
+          <option>Bhutan</option>
+          <option>Maldives</option>
           <option>Other</option>
         </select>
+
         <button
-          type="button"
-          onclick="nextStep(1)"
+          type="submit"
           class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300"
         >
           Next → Job Preferences
@@ -123,10 +162,11 @@
       </form>
 
       <!-- STEP 2 -->
-      <form id="step2" class="space-y-4 hidden">
+      <form id="step2" class="space-y-4 hidden" onsubmit="validateStep2(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 2 of 3 – Job Preferences
         </h2>
+
         <input
           type="text"
           id="jobTitle"
@@ -178,19 +218,19 @@
           <option>E-commerce</option>
           <option>Manufacturing</option>
         </select>
-        <select id="shift" class="w-full p-3 rounded-md text-black">
+        <select id="shift" required class="w-full p-3 rounded-md text-black">
           <option value="">Working Shift Preference</option>
           <option>Day</option>
           <option>Night</option>
           <option>Flexible</option>
         </select>
         <label class="block">
-          <input type="checkbox" id="relocate" class="mr-2" /> Willing to
-          Relocate
+          <input type="checkbox" id="relocate" required class="mr-2" /> I am
+          willing to relocate
         </label>
+
         <button
-          type="button"
-          onclick="nextStep(2)"
+          type="submit"
           class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300"
         >
           Next → Skills & Resume Upload
@@ -198,19 +238,23 @@
       </form>
 
       <!-- STEP 3 -->
-      <form id="step3" class="space-y-4 hidden" onsubmit="showSuccess(); return false;">
+      <form id="step3" class="space-y-4 hidden" onsubmit="validateStep3(event)">
         <h2 class="text-2xl font-semibold text-center mb-4">
           Step 3 of 3 – Skills & Resume Upload
         </h2>
+
         <label class="block mb-2 text-sm">Select Your Primary Skills</label>
         <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
+
         <input
           type="text"
           id="manualSkill"
           placeholder="Add a skill and press Enter"
+          required
           class="w-full p-3 rounded-md text-black"
           onkeydown="addManualSkill(event)"
         />
+
         <label class="block mt-4 mb-2 text-sm">Upload Your Resume</label>
         <input
           type="file"
@@ -219,6 +263,7 @@
           required
           class="w-full p-3 rounded-md text-black"
         />
+
         <button
           type="submit"
           class="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-400"
@@ -239,6 +284,7 @@
         <p class="text-md text-gray-200">
           Kindly check your registered email for your personalized job matches.
         </p>
+
         <div
           class="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg"
         >
@@ -248,7 +294,7 @@
           <p class="text-sm text-gray-300 mt-2">— Mahatma Gandhi</p>
         </div>
 
-        <!-- 💌 Share with Friends -->
+        <!-- 💌 Share Section -->
         <div
           class="mt-8 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg"
         >
@@ -295,14 +341,27 @@
     </div>
 
     <script>
-      function nextStep(current) {
-        document.getElementById(`step${current}`).classList.add("hidden");
-        document.getElementById(`step${current + 1}`).classList.remove("hidden");
+      function validateStep1(e) {
+        e.preventDefault();
+        if (e.target.checkValidity()) nextStep(1);
+      }
+      function validateStep2(e) {
+        e.preventDefault();
+        if (e.target.checkValidity()) nextStep(2);
+      }
+      function validateStep3(e) {
+        e.preventDefault();
+        if (e.target.checkValidity()) showSuccess();
+      }
+
+      function nextStep(n) {
+        document.getElementById(`step${n}`).classList.add("hidden");
+        document.getElementById(`step${n + 1}`).classList.remove("hidden");
         document
-          .getElementById(`stepIndicator${current}`)
+          .getElementById(`stepIndicator${n}`)
           .classList.remove("active-step");
         document
-          .getElementById(`stepIndicator${current + 1}`)
+          .getElementById(`stepIndicator${n + 1}`)
           .classList.add("active-step");
       }
 
@@ -313,16 +372,15 @@
       }
 
       function resetForm() {
-        document.querySelectorAll("form").forEach((form) => form.reset());
+        document.querySelectorAll("form").forEach((f) => f.reset());
+        document.getElementById("skillsContainer").innerHTML = "";
         document.getElementById("successScreen").classList.add("hidden");
         document.getElementById("step1").classList.remove("hidden");
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= 3; i++)
           document
             .getElementById(`stepIndicator${i}`)
             .classList.remove("active-step");
-        }
         document.getElementById("stepIndicator1").classList.add("active-step");
-        document.getElementById("skillsContainer").innerHTML = "";
       }
 
       function copyLink() {
@@ -332,7 +390,7 @@
         setTimeout(() => msg.classList.add("hidden"), 3000);
       }
 
-      // 🧠 Auto-load skills based on selected industry
+      // Skill logic
       const industrySkills = {
         "Information Technology": [
           "Python",
@@ -387,13 +445,12 @@
         }
       }
 
-      // Add manual skill
-      function addManualSkill(event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
+      function addManualSkill(e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
           const input = document.getElementById("manualSkill");
           const skill = input.value.trim();
-          if (skill !== "") {
+          if (skill) {
             const tag = document.createElement("span");
             tag.textContent = skill;
             tag.classList.add("tag");
