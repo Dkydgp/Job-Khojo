@@ -1,70 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Resume Upload Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Search Engine – Upload Resume</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f7ff; }
-    .box { background: white; padding: 16px; border-radius: 8px; max-width: 480px; margin: auto; box-shadow: 0 4px 14px rgba(0,0,0,0.06) }
-    label { display:block; margin-bottom:8px; }
-    .msg { margin-top:12px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #3b1f5c, #5a2a83);
+      color: white;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      color: #333;
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    h2 {
+      color: #4b0082;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      color: #555;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      text-align: left;
+      font-weight: 500;
+      color: #222;
+    }
+    input[type="file"] {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: #f9f9f9;
+    }
+    button {
+      width: 100%;
+      background-color: #ffcc00;
+      border: none;
+      color: #222;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #f3c100;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .loader {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h2>Upload Resume (PDF / DOCX / DOC)</h2>
+  <div class="container">
+    <h2>Upload Your Resume</h2>
+    <p>Please upload your resume in PDF, DOC, or DOCX format.</p>
+
     <form id="resumeForm">
-      <label>
-        Choose file:
-        <input id="fileInput" type="file" accept=".pdf,.doc,.docx" />
-      </label>
-      <button type="submit">Upload</button>
+      <label for="resume">Choose File:</label>
+      <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+
+      <button type="submit" id="uploadBtn">Upload Resume</button>
+
+      <div class="loader" id="loader">⏳ Uploading, please wait...</div>
+      <div class="message" id="message"></div>
     </form>
-    <div class="msg" id="msg"></div>
   </div>
 
   <script>
     const form = document.getElementById("resumeForm");
-    const fileInput = document.getElementById("fileInput");
-    const msg = document.getElementById("msg");
+    const resumeInput = document.getElementById("resume");
+    const message = document.getElementById("message");
+    const loader = document.getElementById("loader");
+    const uploadBtn = document.getElementById("uploadBtn");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      msg.innerText = "";
+      message.textContent = "";
+      loader.style.display = "block";
+      uploadBtn.disabled = true;
 
-      if (!fileInput.files || fileInput.files.length === 0) {
-        msg.innerText = "Please choose a file.";
+      const file = resumeInput.files[0];
+      if (!file) {
+        message.style.color = "red";
+        message.textContent = "Please select a resume file.";
+        loader.style.display = "none";
+        uploadBtn.disabled = false;
         return;
       }
 
-      const file = fileInput.files[0];
-
-      // optional client-side size limit (match server MAX_CONTENT_LENGTH)
-      const maxBytes = 8 * 1024 * 1024;
-      if (file.size > maxBytes) {
-        msg.innerText = "File too large. Max 8MB.";
+      // ✅ Check allowed file types
+      const allowedExtensions = ["pdf", "doc", "docx"];
+      const ext = file.name.split(".").pop().toLowerCase();
+      if (!allowedExtensions.includes(ext)) {
+        message.style.color = "red";
+        message.textContent = "Invalid file type. Only PDF, DOC, or DOCX allowed.";
+        loader.style.display = "none";
+        uploadBtn.disabled = false;
         return;
       }
 
-      const fd = new FormData();
-      // IMPORTANT: key name must be 'resume' to match Flask
-      fd.append("resume", file);
+      // ✅ Check file size limit (8MB)
+      const maxSize = 8 * 1024 * 1024;
+      if (file.size > maxSize) {
+        message.style.color = "red";
+        message.textContent = "File size too large. Maximum 8 MB allowed.";
+        loader.style.display = "none";
+        uploadBtn.disabled = false;
+        return;
+      }
+
+      // ✅ Create FormData
+      const formData = new FormData();
+      formData.append("resume", file);
 
       try {
-        const resp = await fetch("/api/upload_resume", {
+        const response = await fetch("/api/upload_resume", {
           method: "POST",
-          body: fd
+          body: formData,
         });
 
-        const data = await resp.json();
-        if (!resp.ok) {
-          msg.innerText = "Upload failed: " + (data.error || JSON.stringify(data));
+        const result = await response.json();
+        loader.style.display = "none";
+        uploadBtn.disabled = false;
+
+        if (!response.ok) {
+          message.style.color = "red";
+          message.textContent = "❌ Upload failed: " + (result.error || "Try again.");
         } else {
-          msg.innerText = "Success: " + (data.message || "Uploaded");
+          message.style.color = "green";
+          message.textContent = "✅ Resume uploaded successfully!";
+          resumeInput.value = ""; // clear input
         }
       } catch (err) {
-        msg.innerText = "Network error: " + err.message;
+        loader.style.display = "none";
+        uploadBtn.disabled = false;
+        message.style.color = "red";
+        message.textContent = "⚠️ Network error: " + err.message;
       }
     });
   </script>
