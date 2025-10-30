@@ -3,146 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Search Engine – Upload Resume</title>
+  <title>Job Search Engine</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #3b1f5c, #5a2a83);
-      color: white;
       margin: 0;
-      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #3b1f5c, #5a2a83);
+      color: #fff;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
+
     .container {
-      background: #fff;
+      background-color: #fff;
       color: #333;
-      padding: 30px 25px;
+      padding: 25px 30px;
       border-radius: 16px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      width: 90%;
-      max-width: 420px;
+      max-width: 480px;
+      width: 100%;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
-    h2 {
+
+    h1 {
+      font-size: 1.6rem;
       color: #4b0082;
-      font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    p {
-      font-size: 14px;
-      color: #555;
-    }
+
     label {
       display: block;
-      margin-top: 20px;
+      margin-top: 15px;
       text-align: left;
       font-weight: 500;
-      color: #222;
     }
+
+    select,
     input[type="file"] {
       width: 100%;
-      margin-top: 8px;
       padding: 10px;
-      border: 2px solid #ccc;
+      margin-top: 8px;
       border-radius: 8px;
+      border: 2px solid #ccc;
       font-size: 14px;
-      background-color: #f9f9f9;
     }
+
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+
     button {
       width: 100%;
-      background-color: #ffcc00;
-      border: none;
-      color: #222;
       padding: 12px 16px;
-      border-radius: 10px;
       margin-top: 20px;
+      background-color: #ffcc00;
+      color: #222;
       font-size: 16px;
       font-weight: 600;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background 0.3s;
     }
+
     button:hover {
       background-color: #f3c100;
     }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .step {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: #ccc;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step.active {
+      background-color: #4b0082;
+    }
+
     .message {
-      margin-top: 20px;
-      font-size: 15px;
+      margin-top: 10px;
+      font-size: 14px;
       font-weight: 500;
     }
+
     .loader {
-      margin-top: 15px;
+      display: none;
+      margin-top: 10px;
       font-size: 14px;
       color: #555;
+    }
+
+    .hidden {
       display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Upload Your Resume</h2>
-    <p>Please upload your resume in PDF, DOC, or DOCX format.</p>
+    <h1>Job Search Engine 💼</h1>
+    <div class="step-indicator">
+      <div class="step active" id="step1">1</div>
+      <div class="step" id="step2">2</div>
+      <div class="step" id="step3">3</div>
+    </div>
 
-    <form id="resumeForm">
-      <label for="resume">Choose File:</label>
+    <!-- Step 1 -->
+    <form id="jobFormStep1">
+      <label for="salary">Expected Salary Range</label>
+      <select id="salary" required>
+        <option value="">Select range</option>
+        <option value="Below ₹3 LPA">Below ₹3 LPA</option>
+        <option value="₹3–6 LPA">₹3–6 LPA</option>
+        <option value="₹6–10 LPA">₹6–10 LPA</option>
+        <option value="Above ₹10 LPA">Above ₹10 LPA</option>
+      </select>
+
+      <label for="industry">Preferred Industry</label>
+      <select id="industry" required>
+        <option value="">Select industry</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Finance">Finance</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Education">Education</option>
+      </select>
+
+      <label>
+        <input type="checkbox" id="relocate" />
+        I am willing to relocate (optional)
+      </label>
+
+      <button type="button" id="nextToStep2">Next →</button>
+    </form>
+
+    <!-- Step 2 -->
+    <form id="jobFormStep2" class="hidden">
+      <label for="resume">Upload Resume (PDF, DOC, DOCX)</label>
       <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
 
-      <button type="submit" id="uploadBtn">Upload Resume</button>
-
+      <button type="button" id="uploadBtn">Upload Resume</button>
       <div class="loader" id="loader">⏳ Uploading, please wait...</div>
       <div class="message" id="message"></div>
+
+      <button type="button" id="nextToStep3" disabled>Next → Final Step</button>
+    </form>
+
+    <!-- Step 3 -->
+    <form id="jobFormStep3" class="hidden">
+      <h3>✅ All steps completed!</h3>
+      <p>Your job preferences and resume have been submitted successfully.</p>
+      <button type="button" id="finishBtn">Finish</button>
     </form>
   </div>
 
   <script>
-    const form = document.getElementById("resumeForm");
-    const resumeInput = document.getElementById("resume");
-    const message = document.getElementById("message");
-    const loader = document.getElementById("loader");
+    const step1 = document.getElementById("jobFormStep1");
+    const step2 = document.getElementById("jobFormStep2");
+    const step3 = document.getElementById("jobFormStep3");
+    const stepIndicator1 = document.getElementById("step1");
+    const stepIndicator2 = document.getElementById("step2");
+    const stepIndicator3 = document.getElementById("step3");
+
+    const nextToStep2 = document.getElementById("nextToStep2");
     const uploadBtn = document.getElementById("uploadBtn");
+    const nextToStep3 = document.getElementById("nextToStep3");
+    const finishBtn = document.getElementById("finishBtn");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      message.textContent = "";
-      loader.style.display = "block";
-      uploadBtn.disabled = true;
+    const resumeInput = document.getElementById("resume");
+    const loader = document.getElementById("loader");
+    const message = document.getElementById("message");
 
+    // ---- Step 1 → Step 2 ----
+    nextToStep2.addEventListener("click", () => {
+      const salary = document.getElementById("salary").value;
+      const industry = document.getElementById("industry").value;
+      if (!salary || !industry) {
+        alert("Please fill all required fields before proceeding.");
+        return;
+      }
+      step1.classList.add("hidden");
+      step2.classList.remove("hidden");
+      stepIndicator1.classList.remove("active");
+      stepIndicator2.classList.add("active");
+    });
+
+    // ---- Upload Resume ----
+    uploadBtn.addEventListener("click", async () => {
       const file = resumeInput.files[0];
       if (!file) {
         message.style.color = "red";
-        message.textContent = "Please select a resume file.";
-        loader.style.display = "none";
-        uploadBtn.disabled = false;
+        message.textContent = "Please choose a file.";
         return;
       }
 
-      // ✅ Check allowed file types
-      const allowedExtensions = ["pdf", "doc", "docx"];
+      const allowed = ["pdf", "doc", "docx"];
       const ext = file.name.split(".").pop().toLowerCase();
-      if (!allowedExtensions.includes(ext)) {
+      if (!allowed.includes(ext)) {
         message.style.color = "red";
-        message.textContent = "Invalid file type. Only PDF, DOC, or DOCX allowed.";
-        loader.style.display = "none";
-        uploadBtn.disabled = false;
+        message.textContent = "Invalid file type. Only PDF, DOC, DOCX allowed.";
         return;
       }
 
-      // ✅ Check file size limit (8MB)
-      const maxSize = 8 * 1024 * 1024;
-      if (file.size > maxSize) {
+      if (file.size > 8 * 1024 * 1024) {
         message.style.color = "red";
-        message.textContent = "File size too large. Maximum 8 MB allowed.";
-        loader.style.display = "none";
-        uploadBtn.disabled = false;
+        message.textContent = "File too large. Max 8 MB allowed.";
         return;
       }
 
-      // ✅ Create FormData
       const formData = new FormData();
       formData.append("resume", file);
+
+      loader.style.display = "block";
+      message.textContent = "";
+      uploadBtn.disabled = true;
 
       try {
         const response = await fetch("/api/upload_resume", {
@@ -150,17 +244,18 @@
           body: formData,
         });
 
-        const result = await response.json();
+        const data = await response.json();
         loader.style.display = "none";
         uploadBtn.disabled = false;
 
         if (!response.ok) {
           message.style.color = "red";
-          message.textContent = "❌ Upload failed: " + (result.error || "Try again.");
+          message.textContent = "❌ Upload failed: " + (data.error || "Try again.");
+          nextToStep3.disabled = true;
         } else {
           message.style.color = "green";
           message.textContent = "✅ Resume uploaded successfully!";
-          resumeInput.value = ""; // clear input
+          nextToStep3.disabled = false;
         }
       } catch (err) {
         loader.style.display = "none";
@@ -168,6 +263,24 @@
         message.style.color = "red";
         message.textContent = "⚠️ Network error: " + err.message;
       }
+    });
+
+    // ---- Step 2 → Step 3 ----
+    nextToStep3.addEventListener("click", () => {
+      if (nextToStep3.disabled) {
+        alert("Please upload your resume successfully before proceeding.");
+        return;
+      }
+      step2.classList.add("hidden");
+      step3.classList.remove("hidden");
+      stepIndicator2.classList.remove("active");
+      stepIndicator3.classList.add("active");
+    });
+
+    // ---- Finish ----
+    finishBtn.addEventListener("click", () => {
+      alert("🎉 Form completed! Thank you for submitting your details.");
+      window.location.reload();
     });
   </script>
 </body>
