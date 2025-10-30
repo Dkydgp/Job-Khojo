@@ -53,26 +53,18 @@
 
       <!-- STEP 1 -->
       <form id="step1" class="space-y-4" onsubmit="saveStep1(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">Step 1 of 3 – Personal Information</h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 1 – Personal Information</h2>
         <input type="text" id="fullName" placeholder="Full Name" required class="w-full p-3 rounded-md text-black" />
         <input type="email" id="email" placeholder="Email Address" required class="w-full p-3 rounded-md text-black" />
         <input type="tel" id="phone" placeholder="Phone Number" required class="w-full p-3 rounded-md text-black" />
         <input type="text" id="city" placeholder="City" required class="w-full p-3 rounded-md text-black" />
-
-        <!-- ✅ All Indian States -->
         <select id="state" required class="w-full p-3 rounded-md text-black">
           <option value="">Select State</option>
-          <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option>
-          <option>Delhi (NCT)</option><option>Gujarat</option><option>Jharkhand</option>
-          <option>Karnataka</option><option>Maharashtra</option><option>Uttar Pradesh</option>
-          <option>West Bengal</option><option>Tamil Nadu</option><option>Other</option>
+          <option>Bihar</option><option>Delhi</option><option>Jharkhand</option><option>Uttar Pradesh</option>
         </select>
-
         <select id="country" required class="w-full p-3 rounded-md text-black">
-          <option value="">Select Country</option>
-          <option>India</option><option>Nepal</option><option>Bangladesh</option><option>Other</option>
+          <option value="">Select Country</option><option>India</option><option>Other</option>
         </select>
-
         <button type="submit" class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300 transition">
           Next → Job Preferences
         </button>
@@ -80,68 +72,42 @@
 
       <!-- STEP 2 -->
       <form id="step2" class="space-y-4 hidden" onsubmit="saveStep2(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">Step 2 of 3 – Job Preferences</h2>
-
-        <input type="text" id="jobTitle" placeholder="Desired Job Title / Role" required class="w-full p-3 rounded-md text-black" />
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 2 – Job Preferences</h2>
+        <input type="text" id="jobTitle" placeholder="Desired Job Title" required class="w-full p-3 rounded-md text-black" />
         <select id="jobType" required class="w-full p-3 rounded-md text-black">
-          <option value="">Preferred Job Type</option>
-          <option>Full-time</option><option>Part-time</option><option>Remote</option>
-          <option>Hybrid</option><option>Internship</option>
+          <option value="">Preferred Job Type</option><option>Full-time</option><option>Remote</option>
         </select>
         <select id="experience" required class="w-full p-3 rounded-md text-black">
-          <option value="">Experience Level</option>
-          <option>Fresher</option><option>1–3 Years</option><option>3–5 Years</option>
-          <option>5–8 Years</option><option>8+ Years</option>
+          <option value="">Experience Level</option><option>Fresher</option><option>1–3 Years</option>
         </select>
         <select id="salary" required class="w-full p-3 rounded-md text-black">
-          <option value="">Expected Salary (Per Year)</option>
-          <option>Below ₹3 LPA</option><option>₹3–5 LPA</option><option>₹5–8 LPA</option>
-          <option>₹8–12 LPA</option><option>₹12–20 LPA</option><option>Above ₹20 LPA</option>
+          <option value="">Expected Salary</option><option>Below ₹3 LPA</option><option>₹3–5 LPA</option>
         </select>
-        <select id="industry" required class="w-full p-3 rounded-md text-black" onchange="loadSkills()">
-          <option value="">Preferred Industry</option>
-          <option>Information Technology</option><option>Finance</option><option>Healthcare</option>
-          <option>Marketing</option><option>Education</option><option>E-commerce</option>
+        <select id="industry" required class="w-full p-3 rounded-md text-black">
+          <option value="">Industry</option><option>IT</option><option>Finance</option>
         </select>
-
-        <label class="block"><input type="checkbox" id="relocate" class="mr-2" />I am willing to relocate (optional)</label>
-
+        <label class="block"><input type="checkbox" id="relocate" class="mr-2" />Willing to relocate</label>
         <button type="submit" class="w-full bg-yellow-400 text-black p-3 rounded-md font-semibold hover:bg-yellow-300 transition">
-          Next → Skills & Resume
+          Next → Finalize
         </button>
       </form>
 
       <!-- STEP 3 -->
       <form id="step3" class="space-y-4 hidden" onsubmit="submitToBackend(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">Step 3 of 3 – Skills & Resume Upload</h2>
-
-        <label class="block mb-2 text-sm">Select Your Primary Skills</label>
-        <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
-
-        <input type="text" id="manualSkill" placeholder="Add a skill and press Enter (optional)" class="w-full p-3 rounded-md text-black" onkeydown="addManualSkill(event)" />
-
-        <label class="block mt-4 mb-2 text-sm">Upload Your Resume</label>
-        <input type="file" id="resume" accept=".pdf,.doc,.docx" required class="w-full p-3 rounded-md text-black" />
-
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 3 – Finalize Submission</h2>
         <button type="submit" id="submitBtn" class="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-400">
-          Submit → Find Jobs
+          Submit → Complete
         </button>
         <p id="loadingMsg" class="hidden text-center text-yellow-300 mt-3">⏳ Submitting... please wait</p>
       </form>
 
       <div id="successScreen" class="hidden text-center space-y-6">
         <h2 class="text-3xl font-bold text-green-400 animate-bounce">🎉 Congratulations!</h2>
-        <p class="text-lg text-gray-100">
-          Your details have been submitted successfully to <span class="text-yellow-300 font-semibold">Job Khojo</span>.
-        </p>
-        <p class="text-md text-gray-200">
-          Kindly check your registered email for personalized job matches.
-        </p>
+        <p>Your details were successfully submitted to <span class="text-yellow-300 font-semibold">Job Khojo</span>.</p>
       </div>
     </div>
 
     <script>
-      // Navigation
       function nextStep(event, step) {
         event.preventDefault();
         document.getElementById(`step${step}`).classList.add("hidden");
@@ -150,7 +116,6 @@
         document.getElementById(`stepIndicator${step + 1}`).classList.add("active-step");
       }
 
-      // Generic backend save
       async function saveToBackend(data, endpoint) {
         try {
           const res = await fetch(endpoint, {
@@ -165,7 +130,6 @@
         }
       }
 
-      // Step 1 save
       async function saveStep1(event) {
         event.preventDefault();
         const data = {
@@ -177,16 +141,20 @@
           country: country.value,
         };
         const result = await saveToBackend(data, "/api/save_personal");
-        if (result.status === "success") {
+        console.log("Step 1 response:", result);
+        if (result.status === "success" && result.user_id) {
           localStorage.setItem("user_id", result.user_id);
           nextStep(event, 1);
         } else alert("⚠️ Error saving Step 1 data");
       }
 
-      // Step 2 save
       async function saveStep2(event) {
         event.preventDefault();
         const user_id = localStorage.getItem("user_id");
+        if (!user_id) {
+          alert("⚠️ User ID missing — please redo Step 1.");
+          return;
+        }
         const data = {
           user_id,
           job_title: jobTitle.value,
@@ -197,46 +165,11 @@
           relocate: relocate.checked ? "Yes" : "No",
         };
         const result = await saveToBackend(data, "/api/save_preferences");
+        console.log("Step 2 response:", result);
         if (result.status === "success") nextStep(event, 2);
         else alert("⚠️ Error saving Step 2 data");
       }
 
-      // Skills logic
-      const industrySkills = {
-        "Information Technology": ["Python","React","Node.js","SQL","AWS"],
-        "Finance": ["Tally","Excel","Accounting","Taxation"],
-        "Healthcare": ["Clinical Data","Patient Care","Medical Coding"],
-        "Marketing": ["SEO","Social Media","Content Writing"],
-        "Education": ["Teaching","Research","Curriculum Design"],
-        "E-commerce": ["Inventory","Product Listing","SEO"],
-      };
-      function loadSkills() {
-        const ind = industry.value, c = skillsContainer;
-        c.innerHTML = "";
-        if (industrySkills[ind]) {
-          industrySkills[ind].forEach(s => {
-            const tag = document.createElement("span");
-            tag.textContent = s; tag.classList.add("tag");
-            tag.onclick = () => tag.classList.toggle("bg-gray-500");
-            c.appendChild(tag);
-          });
-        }
-      }
-      function addManualSkill(e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          const skill = manualSkill.value.trim();
-          if (skill) {
-            const tag = document.createElement("span");
-            tag.textContent = skill; tag.classList.add("tag");
-            tag.onclick = () => tag.classList.toggle("bg-gray-500");
-            skillsContainer.appendChild(tag);
-            manualSkill.value = "";
-          }
-        }
-      }
-
-      // Step 3 submit (FINAL FIXED)
       async function submitToBackend(event) {
         event.preventDefault();
         const user_id = localStorage.getItem("user_id");
@@ -244,24 +177,21 @@
         btn.disabled = true; loading.classList.remove("hidden");
 
         try {
-          // ✅ Call finalize route (JSON)
           const res = await fetch("/api/finalize", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id }),
           });
           const result = await res.json();
-
+          console.log("Finalize response:", result);
           if (result.status === "success") {
             step3.classList.add("hidden");
             successScreen.classList.remove("hidden");
             localStorage.removeItem("user_id");
-          } else {
-            alert("⚠️ " + (result.message || "Error saving final data"));
-          }
+          } else alert("⚠️ " + (result.message || "Error finalizing"));
         } catch (err) {
+          console.error("Finalize error", err);
           alert("⚠️ Could not reach backend");
-          console.error(err);
         } finally {
           btn.disabled = false; loading.classList.add("hidden");
         }
