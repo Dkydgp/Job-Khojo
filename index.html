@@ -46,32 +46,14 @@
 
       <!-- Progress Bar -->
       <div class="flex justify-between mb-8">
-        <div
-          id="stepIndicator1"
-          class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center active-step"
-        >
-          1
-        </div>
-        <div
-          id="stepIndicator2"
-          class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center"
-        >
-          2
-        </div>
-        <div
-          id="stepIndicator3"
-          class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center"
-        >
-          3
-        </div>
+        <div id="stepIndicator1" class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center active-step">1</div>
+        <div id="stepIndicator2" class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center">2</div>
+        <div id="stepIndicator3" class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center">3</div>
       </div>
 
       <!-- STEP 1 -->
       <form id="step1" class="space-y-4" onsubmit="saveStep1(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">
-          Step 1 of 3 – Personal Information
-        </h2>
-
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 1 of 3 – Personal Information</h2>
         <input type="text" id="fullName" placeholder="Full Name" required class="w-full p-3 rounded-md text-black" />
         <input type="email" id="email" placeholder="Email Address" required class="w-full p-3 rounded-md text-black" />
         <input type="tel" id="phone" placeholder="Phone Number" required class="w-full p-3 rounded-md text-black" />
@@ -80,19 +62,10 @@
         <!-- ✅ All Indian States -->
         <select id="state" required class="w-full p-3 rounded-md text-black">
           <option value="">Select State</option>
-          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
-          <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
-          <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
-          <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
-          <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
-          <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
-          <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
-          <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
-          <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
-          <option>West Bengal</option><option>Andaman and Nicobar Islands</option>
-          <option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option>
-          <option>Delhi (NCT)</option><option>Jammu and Kashmir</option><option>Ladakh</option>
-          <option>Lakshadweep</option><option>Puducherry</option>
+          <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option>
+          <option>Delhi (NCT)</option><option>Gujarat</option><option>Jharkhand</option>
+          <option>Karnataka</option><option>Maharashtra</option><option>Uttar Pradesh</option>
+          <option>West Bengal</option><option>Tamil Nadu</option><option>Other</option>
         </select>
 
         <select id="country" required class="w-full p-3 rounded-md text-black">
@@ -107,9 +80,7 @@
 
       <!-- STEP 2 -->
       <form id="step2" class="space-y-4 hidden" onsubmit="saveStep2(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">
-          Step 2 of 3 – Job Preferences
-        </h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 2 of 3 – Job Preferences</h2>
 
         <input type="text" id="jobTitle" placeholder="Desired Job Title / Role" required class="w-full p-3 rounded-md text-black" />
         <select id="jobType" required class="w-full p-3 rounded-md text-black">
@@ -142,9 +113,7 @@
 
       <!-- STEP 3 -->
       <form id="step3" class="space-y-4 hidden" onsubmit="submitToBackend(event)">
-        <h2 class="text-2xl font-semibold text-center mb-4">
-          Step 3 of 3 – Skills & Resume Upload
-        </h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">Step 3 of 3 – Skills & Resume Upload</h2>
 
         <label class="block mb-2 text-sm">Select Your Primary Skills</label>
         <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
@@ -181,10 +150,10 @@
         document.getElementById(`stepIndicator${step + 1}`).classList.add("active-step");
       }
 
-      // Save data to backend (JSON)
-      async function saveToBackend(data, endpoint = "/api/jobform") {
+      // Generic backend save
+      async function saveToBackend(data, endpoint) {
         try {
-          const res = await fetch(`https://job-search-engine-backend.onrender.com${endpoint}`, {
+          const res = await fetch(endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -200,8 +169,12 @@
       async function saveStep1(event) {
         event.preventDefault();
         const data = {
-          full_name: fullName.value, email: email.value, phone: phone.value,
-          city: city.value, state: state.value, country: country.value,
+          full_name: fullName.value,
+          email: email.value,
+          phone: phone.value,
+          city: city.value,
+          state: state.value,
+          country: country.value,
         };
         const result = await saveToBackend(data, "/api/save_personal");
         if (result.status === "success") {
@@ -263,31 +236,29 @@
         }
       }
 
-      // Step 3 submit
+      // Step 3 submit (FINAL FIXED)
       async function submitToBackend(event) {
         event.preventDefault();
         const user_id = localStorage.getItem("user_id");
-        const btn = submitBtn; const loading = loadingMsg;
+        const btn = submitBtn, loading = loadingMsg;
         btn.disabled = true; loading.classList.remove("hidden");
 
-        const tags = Array.from(document.querySelectorAll("#skillsContainer .tag"))
-          .filter(t => !t.classList.contains("bg-gray-500"))
-          .map(t => t.textContent);
-        const formData = new FormData();
-        formData.append("user_id", user_id);
-        formData.append("skills", tags.join(", "));
-        formData.append("resume", resume.files[0]);
-
         try {
-          const res = await fetch("https://job-search-engine-backend.onrender.com/api/finalize", {
-            method: "POST", body: formData
+          // ✅ Call finalize route (JSON)
+          const res = await fetch("/api/finalize", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id }),
           });
           const result = await res.json();
+
           if (result.status === "success") {
             step3.classList.add("hidden");
             successScreen.classList.remove("hidden");
             localStorage.removeItem("user_id");
-          } else alert("⚠️ Error saving final data");
+          } else {
+            alert("⚠️ " + (result.message || "Error saving final data"));
+          }
         } catch (err) {
           alert("⚠️ Could not reach backend");
           console.error(err);
