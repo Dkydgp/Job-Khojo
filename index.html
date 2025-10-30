@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Search Engine</title>
+  <title>Job Search Engine 💼</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
       background: linear-gradient(135deg, #3b1f5c, #5a2a83);
-      color: #fff;
+      color: white;
       margin: 0;
       min-height: 100vh;
       display: flex;
@@ -17,7 +17,7 @@
       padding: 20px;
     }
     .container {
-      background-color: #fff;
+      background: #fff;
       color: #333;
       padding: 25px 30px;
       border-radius: 16px;
@@ -26,37 +26,42 @@
       width: 100%;
       text-align: center;
     }
+    h1 {
+      color: #4b0082;
+      margin-bottom: 20px;
+    }
     input, select {
       width: 100%;
       padding: 10px;
       margin-top: 8px;
       border-radius: 8px;
       border: 2px solid #ccc;
-      font-size: 14px;
     }
+    input[type="checkbox"] { width: auto; margin-right: 8px; }
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 12px;
+      background: #ffcc00;
       border: none;
-      background-color: #ffcc00;
+      color: #222;
+      padding: 12px;
       border-radius: 10px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
+      margin-top: 15px;
     }
-    button:hover { background-color: #f3c100; }
-    .hidden { display: none; }
-    .loader { display: none; margin-top: 10px; color: #666; }
-    .message { margin-top: 10px; font-weight: 500; }
+    button:hover { background: #f3c100; }
+    .loader { display: none; margin-top: 10px; color: #555; }
+    .message { margin-top: 12px; font-weight: 500; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Submit Your Job Application 💼</h2>
+    <h1>Job Search Application</h1>
 
-    <form id="applicationForm">
+    <form id="jobForm">
       <input type="text" id="name" placeholder="Full Name" required />
-      <input type="number" id="age" placeholder="Age (18-100)" min="18" max="100" required />
+      <input type="number" id="age" placeholder="Age (18–100)" min="18" max="100" required />
       <input type="text" id="qualification" placeholder="Qualification" required />
 
       <select id="salary" required>
@@ -85,9 +90,9 @@
   </div>
 
   <script>
-    const BACKEND_URL = "https://jobkhojo-backend.onrender.com"; // ✅ Replace with your actual backend URL
+    const BACKEND_URL = "https://job-search-engine-backend.onrender.com";
 
-    const form = document.getElementById("applicationForm");
+    const form = document.getElementById("jobForm");
     const loader = document.getElementById("loader");
     const message = document.getElementById("message");
     const submitBtn = document.getElementById("submitBtn");
@@ -101,7 +106,7 @@
       const file = document.getElementById("resume").files[0];
       if (!file) {
         message.style.color = "red";
-        message.textContent = "Please select a resume file.";
+        message.textContent = "Please choose a file.";
         loader.style.display = "none";
         submitBtn.disabled = false;
         return;
@@ -123,21 +128,17 @@
         });
 
         let data;
-        try {
-          data = await response.json();
-        } catch {
-          data = {};
-        }
+        try { data = await response.json(); } catch { data = {}; }
 
         loader.style.display = "none";
         submitBtn.disabled = false;
 
         if (!response.ok) {
           message.style.color = "red";
-          message.textContent = "❌ Upload failed: " + (data.error || "Unexpected error");
+          message.textContent = "❌ Upload failed: " + (data.error || "Unknown error");
         } else {
           message.style.color = "green";
-          message.textContent = `✅ Application submitted successfully! Application ID: ${data.application_id}`;
+          message.textContent = `✅ Application submitted successfully! (ID: ${data.application_id})`;
           form.reset();
         }
       } catch (err) {
