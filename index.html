@@ -31,49 +31,109 @@
 
       <!-- STEP 1 -->
       <form id="step1" class="space-y-3" onsubmit="saveStep1(event)">
+        <h2 class="text-center text-xl mb-2 font-semibold">Step 1: Personal Information</h2>
+
         <input id="fullName" class="w-full p-3 rounded text-black" placeholder="Full Name" required />
-        <input id="email" class="w-full p-3 rounded text-black" placeholder="Email" required type="email" />
-        <input id="phone" class="w-full p-3 rounded text-black" placeholder="Phone" required />
+        <input id="email" class="w-full p-3 rounded text-black" placeholder="Email Address" required type="email" />
+        <input id="phone" class="w-full p-3 rounded text-black" placeholder="Phone Number" required />
         <input id="city" class="w-full p-3 rounded text-black" placeholder="City" required />
-        <input id="state" class="w-full p-3 rounded text-black" placeholder="State" required />
-        <input id="country" class="w-full p-3 rounded text-black" placeholder="Country" required />
-        <button class="w-full bg-yellow-400 text-black p-3 rounded font-semibold">Next →</button>
+
+        <!-- 🗺️ State Dropdown -->
+        <select id="state" required class="w-full p-3 rounded text-black">
+          <option value="">Select State</option>
+          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+          <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+          <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+          <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+          <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+          <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+          <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+          <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+          <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+          <option>West Bengal</option><option>Delhi (NCT)</option>
+          <option>Jammu and Kashmir</option><option>Ladakh</option>
+          <option>Andaman and Nicobar Islands</option><option>Chandigarh</option>
+          <option>Dadra and Nagar Haveli and Daman and Diu</option>
+          <option>Lakshadweep</option><option>Puducherry</option>
+        </select>
+
+        <!-- 🌍 Country Dropdown -->
+        <select id="country" required class="w-full p-3 rounded text-black">
+          <option value="">Select Country</option>
+          <option>India</option>
+          <option>Nepal</option>
+          <option>Bangladesh</option>
+          <option>Other</option>
+        </select>
+
+        <button class="w-full bg-yellow-400 text-black p-3 rounded font-semibold hover:bg-yellow-300">
+          Next → Job Preferences
+        </button>
       </form>
 
       <!-- STEP 2 -->
       <form id="step2" class="space-y-3 hidden" onsubmit="saveStep2(event)">
-        <input id="jobTitle" class="w-full p-3 rounded text-black" placeholder="Job Title" required />
-        <input id="jobType" class="w-full p-3 rounded text-black" placeholder="Job Type" required />
-        <input id="experience" class="w-full p-3 rounded text-black" placeholder="Experience" required />
-        <input id="salary" class="w-full p-3 rounded text-black" placeholder="Salary" required />
-        <input id="industry" class="w-full p-3 rounded text-black" placeholder="Industry" required />
-        <label><input type="checkbox" id="relocate" /> Willing to relocate</label>
-        <button class="w-full bg-yellow-400 text-black p-3 rounded font-semibold">Next →</button>
+        <h2 class="text-center text-xl mb-2 font-semibold">Step 2: Job Preferences</h2>
+
+        <input id="jobTitle" class="w-full p-3 rounded text-black" placeholder="Desired Job Title" required />
+        <select id="jobType" class="w-full p-3 rounded text-black" required>
+          <option value="">Select Job Type</option>
+          <option>Full-time</option><option>Part-time</option><option>Remote</option>
+          <option>Hybrid</option><option>Internship</option>
+        </select>
+
+        <select id="experience" class="w-full p-3 rounded text-black" required>
+          <option value="">Experience Level</option>
+          <option>Fresher</option><option>1–3 Years</option><option>3–5 Years</option>
+          <option>5–8 Years</option><option>8+ Years</option>
+        </select>
+
+        <select id="salary" class="w-full p-3 rounded text-black" required>
+          <option value="">Expected Salary</option>
+          <option>Below ₹3 LPA</option><option>₹3–5 LPA</option><option>₹5–8 LPA</option>
+          <option>₹8–12 LPA</option><option>₹12–20 LPA</option><option>Above ₹20 LPA</option>
+        </select>
+
+        <select id="industry" class="w-full p-3 rounded text-black" required>
+          <option value="">Select Industry</option>
+          <option>Information Technology</option>
+          <option>Finance</option>
+          <option>Healthcare</option>
+          <option>Marketing</option>
+          <option>Education</option>
+          <option>E-commerce</option>
+        </select>
+
+        <label><input type="checkbox" id="relocate" /> I am willing to relocate (optional)</label>
+
+        <button class="w-full bg-yellow-400 text-black p-3 rounded font-semibold hover:bg-yellow-300">
+          Next → Final Step
+        </button>
       </form>
 
       <!-- STEP 3 -->
       <form id="step3" class="space-y-3 hidden" onsubmit="finalize(event)">
-        <p class="text-center">Review complete. Submit your application.</p>
-        <button id="submitBtn" class="w-full bg-green-500 text-white p-3 rounded font-semibold">Finalize</button>
+        <h2 class="text-center text-xl mb-2 font-semibold">Step 3: Submit</h2>
+        <p class="text-center">All steps done! Submit your application.</p>
+        <button id="submitBtn" class="w-full bg-green-500 text-white p-3 rounded font-semibold hover:bg-green-400">
+          Submit Application
+        </button>
         <p id="loadingMsg" class="hidden text-yellow-300 text-center">⏳ Submitting...</p>
       </form>
 
       <!-- SUCCESS -->
       <div id="successScreen" class="hidden text-center space-y-4">
         <h2 class="text-2xl text-green-400 font-bold">🎉 Submitted!</h2>
-        <p>Your application has been recorded successfully.</p>
+        <p>Your details have been successfully submitted.</p>
       </div>
     </div>
 
     <script>
-      // ✅ Use your Render backend
       const BASE_URL = "https://job-search-engine-backend.onrender.com";
 
-      function showStep(num) {
+      function showStep(n) {
         ["step1", "step2", "step3"].forEach((id, i) => {
-          document.getElementById(id).classList.toggle("hidden", i + 1 !== num);
-          document.getElementById("s" + (i + 1)).classList.toggle("bg-green-500", i + 1 === num);
-          document.getElementById("s" + (i + 1)).classList.toggle("bg-gray-400", i + 1 !== num);
+          document.getElementById(id).classList.toggle("hidden", i + 1 !== n);
         });
       }
 
@@ -85,16 +145,16 @@
           phone: phone.value,
           city: city.value,
           state: state.value,
-          country: country.value,
+          country: country.value
         };
-        console.log("➡️ Step1 payload:", payload);
+        console.log("➡️ Step1 Payload:", payload);
         const res = await fetch(`${BASE_URL}/api/save_personal`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
         const data = await res.json().catch(() => ({}));
-        console.log("⬅️ Step1 response:", data);
+        console.log("⬅️ Step1 Response:", data);
         if (data.status === "success") {
           localStorage.setItem("user_id", data.user_id);
           showStep(2);
@@ -104,7 +164,6 @@
       async function saveStep2(e) {
         e.preventDefault();
         const user_id = localStorage.getItem("user_id");
-        if (!user_id) return alert("User ID missing — redo Step 1");
         const payload = {
           user_id,
           job_title: jobTitle.value,
@@ -112,16 +171,16 @@
           experience: experience.value,
           salary: salary.value,
           industry: industry.value,
-          relocate: relocate.checked ? "Yes" : "No",
+          relocate: relocate.checked ? "Yes" : "No"
         };
-        console.log("➡️ Step2 payload:", payload);
+        console.log("➡️ Step2 Payload:", payload);
         const res = await fetch(`${BASE_URL}/api/save_preferences`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
         const data = await res.json().catch(() => ({}));
-        console.log("⬅️ Step2 response:", data);
+        console.log("⬅️ Step2 Response:", data);
         if (data.status === "success") showStep(3);
         else alert("⚠️ Step 2 error: " + (data.message || "unknown"));
       }
@@ -131,18 +190,21 @@
         const user_id = localStorage.getItem("user_id");
         const btn = submitBtn, loading = loadingMsg;
         btn.disabled = true; loading.classList.remove("hidden");
+
         const res = await fetch(`${BASE_URL}/api/finalize`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id }),
         });
         const data = await res.json().catch(() => ({}));
-        console.log("⬅️ Finalize response:", data);
+        console.log("⬅️ Finalize Response:", data);
+
         if (data.status === "success") {
           document.getElementById("step3").classList.add("hidden");
           document.getElementById("successScreen").classList.remove("hidden");
           localStorage.removeItem("user_id");
         } else alert("⚠️ Finalize error: " + (data.message || "unknown"));
+
         btn.disabled = false; loading.classList.add("hidden");
       }
     </script>
