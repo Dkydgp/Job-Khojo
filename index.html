@@ -106,6 +106,12 @@
 
         <label><input type="checkbox" id="relocate" /> I am willing to relocate (optional)</label>
 
+        <!-- 📎 Resume Upload -->
+        <div>
+          <label class="block font-medium mb-1">Upload Resume (PDF or DOCX)</label>
+          <input type="file" id="resume" accept=".pdf,.doc,.docx" class="w-full p-2 bg-white text-black rounded" required />
+        </div>
+
         <button class="w-full bg-yellow-400 text-black p-3 rounded font-semibold hover:bg-yellow-300">
           Next → Final Step
         </button>
@@ -125,6 +131,7 @@
       <div id="successScreen" class="hidden text-center space-y-4">
         <h2 class="text-2xl text-green-400 font-bold">🎉 Submitted!</h2>
         <p>Your details have been successfully submitted.</p>
+        <p class="text-yellow-300 font-semibold">📧 Please check your email for job matches soon!</p>
       </div>
     </div>
 
@@ -164,6 +171,30 @@
       async function saveStep2(e) {
         e.preventDefault();
         const user_id = localStorage.getItem("user_id");
+        const resumeFile = document.getElementById("resume").files[0];
+        if (!resumeFile) return alert("Please upload your resume (PDF or DOCX)");
+
+        // 1️⃣ Upload resume
+        const formData = new FormData();
+        formData.append("file", resumeFile);
+        formData.append("user_id", user_id);
+
+        const uploadRes = await fetch(`${BASE_URL}/api/upload_resume`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const uploadData = await uploadRes.json().catch(() => ({}));
+        console.log("📎 Resume Upload Response:", uploadData);
+
+        if (uploadData.status !== "success") {
+          alert("⚠️ Resume upload failed. Try again.");
+          return;
+        }
+
+        localStorage.setItem("resume_url", uploadData.resume_url);
+
+        // 2️⃣ Save job preferences
         const payload = {
           user_id,
           job_title: jobTitle.value,
@@ -171,14 +202,18 @@
           experience: experience.value,
           salary: salary.value,
           industry: industry.value,
-          relocate: relocate.checked ? "Yes" : "No"
+          relocate: relocate.checked ? "Yes" : "No",
+          resume_url: uploadData.resume_url,
         };
+
         console.log("➡️ Step2 Payload:", payload);
+
         const res = await fetch(`${BASE_URL}/api/save_preferences`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
         const data = await res.json().catch(() => ({}));
         console.log("⬅️ Step2 Response:", data);
         if (data.status === "success") showStep(3);
