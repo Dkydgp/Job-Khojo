@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Job Khojo</title>
+    <title>Job Khojo | Find Your Perfect Job</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -64,6 +64,9 @@
     </div>
 
     <script>
+      // Base URL of your backend
+      const BASE_URL = "http://127.0.0.1:10000";
+
       function showStep(num) {
         ["step1", "step2", "step3"].forEach((id, i) => {
           document.getElementById(id).classList.toggle("hidden", i + 1 !== num);
@@ -83,7 +86,7 @@
           country: country.value,
         };
         console.log("➡️ Step1 payload:", payload);
-        const res = await fetch("/api/save_personal", {
+        const res = await fetch(`${BASE_URL}/api/save_personal`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -110,7 +113,7 @@
           relocate: relocate.checked ? "Yes" : "No",
         };
         console.log("➡️ Step2 payload:", payload);
-        const res = await fetch("/api/save_preferences", {
+        const res = await fetch(`${BASE_URL}/api/save_preferences`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -126,7 +129,7 @@
         const user_id = localStorage.getItem("user_id");
         const btn = submitBtn, loading = loadingMsg;
         btn.disabled = true; loading.classList.remove("hidden");
-        const res = await fetch("/api/finalize", {
+        const res = await fetch(`${BASE_URL}/api/finalize`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id }),
